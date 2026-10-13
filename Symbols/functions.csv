@@ -53,6 +53,11 @@ va,name,conf,area,src,note
 0x008D4000,CTagTrigger_Evaluate,C,triggers,cp,scope+0x0C == this+0x20
 0x008D7450,CIsAiTrigger_Evaluate,C,triggers,cp,value at +0x1C; AI = world+0xAEC[country] == 0
 0x008D28C0,CCasusBelliTrigger_Evaluate,C,triggers,cp,calls CBManager_IsAnyCBUsable
+0x008CDFC0,CHasProvinceModifierTrigger_Evaluate,C,triggers,re,"scope+0x10 is province index; compares record definition; ignores node marker/date; see Engine/province-modifiers.md"
+0x005661B0,ModifierDefinition_FindByName,C,util,re,"EAX=registry; stack MSVC-string pointer; returns definition in EAX; province parsers use 0x0125A69C"
+0x004B3A30,Province_AddModifierFromName,C,effects,re,"allocates separate record/node; record+0x08 definition / +0x0C date; updates province+0xC8/+0xCC/+0xD0; duration semantics unresolved"
+0x004B39A0,Province_RemoveModifier,C,effects,re,"ESI=province; stack definition pointer; RET 4 no success-result contract; guard+0xD4 marks or unlinks nodes; deferred drain unresolved"
+0x00882290,CRemoveProvinceModifierEffect_Execute,C,effects,re,"virtual slot 11; ECX=effect; two stack args RET 8; resolves scope province index then calls 0x004B39A0 at 0x008822AC"
 0x008D3F50,Trigger_ParseCountryRef,C,triggers,cp,"THIS = 0x405, FROM = 0x3DE"
 0x008B93B0,Trigger_ParseBool,C,triggers,cp,yes = token 0x29F
 0x00882A40,CClrCountryFlagEffect_Execute,C,effects,cp,"vtable 0x00E2ACC0 slot 11; thiscall(scope, arg2), RET 8"

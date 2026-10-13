@@ -43,6 +43,10 @@ the code, **[M]** measured.
 
 The event code copies 0x48 bytes (`EventScope_Copy` `0x008A88D0`).
 
+[Province modifier presence and removal](province-modifiers.md) both resolve
+scope `+0x10` as a province index, not a province pointer. The presence trigger
+does not filter deferred-removal markers; marking is not physical removal.
+
 **A byte copy of a live scope is not a valid scope.** `+0x24` points at the original, so triggers that
 go through THIS on the copy read the original's country. Any code that copies a scope must move fields
 that point inside the source into the copy (or build the copy with the ctor). **[C]**

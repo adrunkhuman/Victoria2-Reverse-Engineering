@@ -203,6 +203,15 @@ province struct (CMapProvince) (stored seemingly randomly)
 	
 	0x084	CProvinceModifier.vtable	ptr32
 	0x088	??? 397						int32
+
+	0x0C8	active modifier list head	ptr32
+	0x0CC	active modifier list tail	ptr32
+	0x0D0	linked modifier node count	uint32
+	0x0D4	modifier unlink guard		byte (nonzero defers unlinking)
+	#node: record +0, previous +4, next +8, pending-removal byte +0xC
+	#record: definition +8, date +0xC; separate 0x10-byte node/record allocations
+	#marked nodes remain counted; presence ignores the marker
+	#see ../Engine/province-modifiers.md for native paths and lifetime limits
 	
 	0x188	state ptr					ptr32
 	

@@ -2,6 +2,7 @@ va,name,kind,conf,src,note
 0x012588E8,g_world,ptr,C,cp,world / game state; layout in structs.csv (World)
 0x012587E4,g_countryManager,ptr,C,cp,"+0 count of all defined tags, +4 CCountry* array"
 0x0131ACAC,g_cbManager,ptr,C,cp,"+0xC/+0x10 vector<CCasusBelliType*>; getter 0x0090CC40"
+0x0125A69C,g_modifierDefinitionRegistry,ptr,C,re,"used by add/remove province modifier and presence parsers via 0x005661B0; complete registry class/lifetime unknown; see Engine/province-modifiers.md"
 0x01319730,g_decisionManager,ptr,C,cp,"lists +0xC/+0x10 and +0x28/+0x2C; getter 0x00875040"
 0x01258A74,g_renderDevice,ptr,I,cp,"+0x6BCA0 has-focus byte; +0x6BC44 mirrors the fog-of-war flag"
 0x01258A48,g_unitManager,ptr,?,cp,iterated in the per-country pre-pass

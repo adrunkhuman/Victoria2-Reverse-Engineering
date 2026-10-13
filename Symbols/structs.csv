@@ -52,6 +52,16 @@ Relation,0x50,heldCBs,list,C,cp,"node +0 CCasusBelli*, +8 next"
 CCasusBelli,0x24,typeIndex,u32,C,cp,
 CMapProvince,0x14,eventCandidates,vector<CEvent*>,C,re,"+0x14/+0x18"
 CMapProvince,0x58,id,u32,C,re,
+CMapProvince,0xC8,modifierHead,ptr,C,re,"head of active-modifier nodes; presence 0x008CDFC0 and add/remove paths; see Engine/province-modifiers.md"
+CMapProvince,0xCC,modifierTail,ptr,C,re,"tail of modifier nodes; append 0x004B3B80; unlink 0x004B3A10"
+CMapProvince,0xD0,modifierNodeCount,u32,C,re,"append 0x004B3B86; unlink decrement 0x004B3A1F; marked nodes remain counted"
+CMapProvince,0xD4,modifierUnlinkGuard,u8,C,re,"nonzero marks instead of physical unlink; 0x004B39D7; deferred-drain timing unknown"
+ProvinceModifierNode,0x00,record,ptr,C,re,"separate 0x10-byte node and 0x10-byte record allocations; descriptive structure name"
+ProvinceModifierNode,0x04,previous,ptr,C,re,
+ProvinceModifierNode,0x08,next,ptr,C,re,
+ProvinceModifierNode,0x0C,pendingRemoval,u8,C,re,"effect removal sets at 0x004B39E0; presence does not inspect this byte"
+ActiveProvinceModifier,0x08,definition,ptr,C,re,"store 0x004B3B3E; descriptive structure name; full class/ownership unknown"
+ActiveProvinceModifier,0x0C,date,u32,C,re,"store 0x004B3B41; expiry read 0x004B3750; duration/sentinel semantics unresolved"
 CMapProvince,0x12C,ownerIndex,u32,C,re,0 = unowned (skipped by the event scan)
 CMapProvince,0x188,state,CState*,C,re,
 CMapProvince,0x194,popLists,ptr,C,re,per-pop-type lists
