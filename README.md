@@ -29,6 +29,7 @@ This repository documents static reverse engineering of `v2game.exe`, primarily 
 * [Economy & Market](Economy/economy-market.md) — economic manager, supply/demand, prices, stockpiles, distribution, workers, and periodic economic processing.
 * [Stockpiles](Economy/stockpiles.md) — artisan/factory stockpile subtraction and 64-bit good storage.
 * [Factory Construction](Economy/factory-construction.md) — factory construction validation, UI gates, state/type restrictions, and civilization checks.
+* [Production & Settlement](Economy/production-and-settlement.md) — requests versus delivery, physical consumption, sales inventory, and RGO output.
 * [Economy Daily Path](Economy/economy-daily-path.md) — the daily economy call path, per-pop list walks, shared state, fixed-point price bounds (2^15) and corrections.
 
 

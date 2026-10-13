@@ -63,13 +63,26 @@ CState,0x60,buildings,ptr,I,re,
 CState,0x68,factoryCount,u32,C,re,< 8 to build
 CState,0x84,colonyStatus,u32,C,re,> 0 = colonial
 CStateBuilding,0x20,level,u32,I,re,
+CStateBuilding,0x28,inputStock,CGoodsPool,C,cp,"stock balance; deliveries add here; not today's purchases"
+CStateBuilding,0x80,requestedInputs,CGoodsPool,C,cp,"recipe/maintenance less stock then clamped; not actual delivery"
+CStateBuilding,0xD8,producedQuantity,i64,C,cp,output quantity read by sales caller
+CStateBuilding,0x160,salesAmount,i64,C,cp,"assigned at 0x004F4B59/0x004F4B5F; separate from conditional budget credit"
+CStateBuilding,0x1F8,unsoldQuantity,i64,C,cp,"opening inventory read then closing written at 0x00488489/0x00488493"
 CStateBuilding,0x188,closed,u8,I,re,
 CStateBuilding,0x224,nextInState,ptr,I,re,
 Pop,0x58,size,u32,C,re,
 Pop,0x6C,culture,u32,C,re,
 Pop,0x27C,next,Pop*,C,re,
-StockpileHolder,0x08,goodPresent,u8[],C,re,index by good
-StockpileHolder,0x48,stockpile,vector<i64>,C,re,"+0x48/+0x4C; 8-byte entries"
+StockpileHolder,0x08,goodPresent,u8[],C,re,good ordinal -> quantity slot; zero = absent
+StockpileHolder,0x48,stockpile,vector<i64>,C,re,"+0x48/+0x4C; 8-byte entries; generic pool values indexed through +0x08 map"
+CProvinceRGO,0x08,productionType,CProductionType*,C,cp,recipe passed to 0x004DE350
+CProvinceRGO,0x10,employment,CStateEmployment,C,cp,"embedded employment base; complete record stride 0xB0 is not employment size"
+CProvinceRGO,0x1C,province,ptr,C,cp,written by registry initialization at 0x004C2621
+CProvinceRGO,0x20,assignments,vector,C,cp,"+0x20/+0x24; 16-byte entries; assigned count at entry +0x0C"
+CProvinceRGO,0x38,efficiency,i64,C,cp,"employment +0x28; /32768; first output multiply"
+CProvinceRGO,0x40,throughput,i64,C,cp,"employment +0x30; /32768; first output multiply"
+CProvinceRGO,0x58,assignedWorkers,u32,C,cp,"employment +0x48; sum of assignment counts"
+CProvinceRGO,0x88,sizeMultiplier,i64,C,cp,/32768; final scale argument to 0x004DE350
 Technology,0x2E4,index,u32,C,re,
 Technology,0x2EC,prerequisites,?,I,re,
 Technology,0x340,year,u32,C,re,date requirement

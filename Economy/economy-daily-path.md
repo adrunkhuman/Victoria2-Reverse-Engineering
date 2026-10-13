@@ -88,6 +88,11 @@ routine), so the cost is the number of divisions, not a slow helper. **[M]**
 
 `Stockpile_SubtractArtisanFactory` (`0x0047DCA0`): a byte per good at `holder+0x08+good` says whether the
 good is present; the amounts are a vector of int64 at `holder+0x48/+0x4C`; the good count is
-`g_goodsCount` (`0x012587F4`). Missing entries are created with the negated amount. `ScaledDotProduct`
+`g_goodsCount` (`0x012587F4`). The byte maps a good ordinal to a quantity slot (zero = absent).
+The helper subtracts its source pool from destination `ESI`; it does not imply physical consumption.
+Request generation uses it to subtract stock from a temporary requirement pool, leaving actual stock
+unchanged. See [stockpiles.md](stockpiles.md) and
+[production-and-settlement.md](production-and-settlement.md) for operand and settlement boundaries.
+Missing destination entries are created with the negated amount. `ScaledDotProduct`
 (`0x0047E3E0`, ~58 callers) and `Buffer_ScaleValuesInRange` (`0x0047DE60`, ~53 callers) are generic, not
 market-specific.

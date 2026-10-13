@@ -1,8 +1,15 @@
-# PART V — ARTISAN / FACTORY STOCKPILE SUBTRACTION
+# PART V — GOODS-POOL SUBTRACTION
 
 ## MAP 13 — `SubtractArtisanFactoryStockpileFromESIStockpile` — 0x0047DCA0
 
-This function provides important evidence about how goods and stockpiles are represented.
+This is a generic goods-pool subtraction helper. The stack argument supplies the source pool;
+`ESI` supplies the destination pool. It changes the destination, not the source. Its historical
+name does not make every call an artisan/factory stock-consumption operation.
+
+Factory and artisan request generation subtract stock from a temporary requirement pool;
+actual stock remains unchanged at those calls. See
+[production-and-settlement.md](production-and-settlement.md) for physical boundaries and
+[economy-daily-path.md](economy-daily-path.md) for the daily call path.
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -11,7 +18,7 @@ This function provides important evidence about how goods and stockpiles are rep
 
 For each good:
 
-artisan/factory.good_bit_flags[idx]
+source_pool.good_indices[good]
                 │
                 ▼
           Is good present?
@@ -38,14 +45,14 @@ Important fields:
 [0x12587f4]
     number_of_goods
 
-[entity + 0x08 + idx]
-    good bitflag / positional index
+[pool + 0x08 + good]
+    quantity-slot index (zero = absent)
 
-[entity + 0x48]
-    stockpile vector begin
+[pool + 0x48]
+    quantity vector begin
 
-[entity + 0x4C]
-    stockpile vector end
+[pool + 0x4C]
+    quantity vector end
 ```
 
 Stockpile entries are:
@@ -67,7 +74,7 @@ The vector size is obtained through:
 When the destination has no entry:
 
 ```text
-artisan/factory amount
+source_pool amount
         ↓
 NEG 64-bit value
         ↓
@@ -79,7 +86,7 @@ When the destination already has an entry:
 ```text
 ESI stockpile
         -
-artisan/factory stockpile
+source_pool quantity
         ↓
 64-bit SUB + SBB
 ```
@@ -89,7 +96,7 @@ Therefore the conceptual result is:
 ```text
 ESI.stockpile[good]
     -=
-artisan/factory.stockpile[good]
+source_pool.quantity[good]
 ```
 
 ### Important finding
@@ -97,15 +104,16 @@ artisan/factory.stockpile[good]
 The byte at:
 
 ```text
-entity + 0x08 + good_index
+pool + 0x08 + good_index
 ```
 
-acts as a presence/index structure.
+maps the good ordinal to a slot in the quantity vector; zero means absent.
+The amount is not necessarily at `vector[good_index]`.
 
 The actual amount is stored in the stockpile vector at:
 
 ```text
-entity + 0x48
+pool + 0x48
 ```
 
 with 8-byte entries.

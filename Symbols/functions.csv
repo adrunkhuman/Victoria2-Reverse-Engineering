@@ -119,7 +119,11 @@ va,name,conf,area,src,note
 0x00484060,WorldMarketUpdate,C,economy,cp,"countries -> states -> factories; ~21.6 ms/day"
 0x004808D0,ProcessMarketAndGoodsDistribution,C,economy,cp,~8.7 ms/day
 0x00488080,Market_PostProcess,I,economy,cp,~3.3 ms/day
-0x00482FF0,Factory_MarketUpdate,I,economy,cp,called per factory from WorldMarketUpdate
+0x00482FF0,Factory_MarketUpdate,I,economy,cp,"pre-purchase caller 0x004845FD; delivery calls 0x0048369D/0x004836AA add to factory +0x28 via 0x0047DC20"
+0x00483AA0,Artisan_MarketUpdate,I,economy,cp,"caller 0x00486BFF; delivery calls 0x00483FCA/0x00483FDA add to artisan stock via 0x0047DC20"
+0x004F4B30,Factory_SettleSales,I,economy,cp,"assigns sales amount to +0x160/+0x164; credits both budget branches; negative opening budget is reset, negative result from nonnegative opening saturates"
+0x004C25B0,RGO_GetRegistry,I,economy,cp,"lazy accessor for global 0x01258728; caller indexes province_id * 0xB0"
+0x004DE350,RGO_CalculateOutput,I,economy,cp,"employment efficiency * throughput * recipe +0x88 * record size; >>15 after each multiply; valid caller path"
 0x00485E40,Market_UpdateCountryPops,I,economy,cp,"called per country from WorldMarketUpdate; per-pop money/needs (old name pop_daily_update_money)"
 0x00520150,Economy_CalculateDistribution,I,economy,re,"shared 64-bit accumulators; 24 callers (load, UI, diplomacy, events)"
 0x0068D250,EconomyManager_RebuildLists,I,economy,re,
@@ -130,15 +134,16 @@ va,name,conf,area,src,note
 0x00487410,Market_AddRealDemand,C,economy,re,demand side
 0x00969760,Economy_AccumulateElement,I,economy,re,shared accumulators; not thread-safe
 0x00523400,Loan_CalculateInterest,I,economy,re,
-0x0047DCA0,Stockpile_SubtractArtisanFactory,C,economy,re,
-0x0047DC20,Buffer_AccumulateIndexedValue,I,util,re,
+0x0047DCA0,Stockpile_SubtractArtisanFactory,C,economy,re,"generic source-pool subtraction from destination ESI; request callers subtract stock from temporary requirements"
+0x0047DC20,Buffer_AccumulateIndexedValue,I,util,re,"generic goods-pool addition into destination ESI; factory/artisan settlement callers add actual deliveries"
 0x0047DE60,Buffer_ScaleValuesInRange,I,util,re,~53 callers
 0x0047D9E0,Clamp,I,util,re,
 0x0047E3E0,ScaledDotProduct,I,util,re,~58 callers
 0x0043A880,vector_resize,I,util,re,
 0x0043AB60,Memory_CopyOverlapping,I,util,re,
 0x0054C600,intro_sort,I,util,re,
-0x004DD470,Goods_MultiplyClamp99999,I,economy,re,
+0x004DD470,Goods_MultiplyClamp99999,I,economy,re,"request generation: copy/scale recipe inputs + maintenance; subtract stock from request destination; clamp; does not consume stock"
+0x004DD3C0,Artisan_BuildInputRequest,I,economy,cp,"caller 0x00486B81; subtract stock from temporary requirement pool at 0x004DD43E; not physical consumption"
 0x0047DB00,CGoodsPool_copy_ctor,I,economy,re,
 0x0041A160,PopTypeDb_ctor,I,pops,re,constructor of the lazily created DAT_0131BB34
 0x00A7AED0,WorkerThread_Create,I,threads,re,CreateThread(WorkerThread_Entry)
