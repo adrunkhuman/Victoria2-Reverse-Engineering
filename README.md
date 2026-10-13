@@ -30,6 +30,7 @@ This repository documents static reverse engineering of `v2game.exe`, primarily 
 * [Stockpiles](Economy/stockpiles.md) — artisan/factory stockpile subtraction and 64-bit good storage.
 * [Factory Construction](Economy/factory-construction.md) — factory construction validation, UI gates, state/type restrictions, and civilization checks.
 * [Economy Daily Path](Economy/economy-daily-path.md) — the daily economy call path, per-pop list walks, shared state, fixed-point price bounds (2^15) and corrections.
+* [Tax & Tariff Receipts](Economy/tax-and-tariff-receipts.md) — class-tax pointer indirection, aggregate conversion, treasury/daily-accounting credits, and the bounded positive tariff path.
 
 
 ### 📁 Technology

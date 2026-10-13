@@ -45,6 +45,10 @@ DayTick
 it runs daily inside the TBB `parallel_for` `ProcessPopStatisticsFunctor` (`FUN_0068F4C0`, see
 [../Engine/threads.md](../Engine/threads.md)).
 
+For class-tax conversion and positive tariff treasury/ledger credits, see
+[tax and tariff receipts](tax-and-tariff-receipts.md). Those receipt boundaries
+do not reconstruct the full POP tax calculation or AI slider policy.
+
 ## How the per-pop loops walk memory **[C]**
 
 `Market_UpdateCountryPops(market, country, ...)` (four stack arguments; `market` = `EDI`, `country` = `EBX`

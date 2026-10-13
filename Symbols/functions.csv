@@ -115,6 +115,7 @@ va,name,conf,area,src,note
 0x004DA720,Factory_CheckCost,I,factories,re,
 0x004F50C0,Factory_DecayWithoutInputs,I,factories,re,
 0x0068BF00,EconomyManager_UpdateFull,C,economy,re,"full economy rebuild; only caller Game_FinalizeLoadAndEnterGameplay (0x0066321D), i.e. once after loading"
+0x00439630,Tax_SumClearIncomeAndConvert,C,economy,cp,"sums and clears tax-object income array at +0x18; converts once per class via (sum << 15) / 32768000; see Economy/tax-and-tariff-receipts.md"
 0x00489990,Economy_Update,C,economy,cp,"world market daily update (""worldmarket.cpp""); ~37 ms/day"
 0x00484060,WorldMarketUpdate,C,economy,cp,"countries -> states -> factories; ~21.6 ms/day"
 0x004808D0,ProcessMarketAndGoodsDistribution,C,economy,cp,~8.7 ms/day

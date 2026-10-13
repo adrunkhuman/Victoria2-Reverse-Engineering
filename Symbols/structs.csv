@@ -22,6 +22,7 @@ CCountry,0x1C,tag,char[4],C,cp,
 CCountry,0x20,index,u32,C,cp,
 CCountry,0x31,isGreatPower,u8,I,re,
 CCountry,0x68,delayedEvents,vector,C,re,"+0x68/+0x6C; item+0x54 counts days down"
+CCountry,0xA0,taxSettingsBegin,CTaxSetting**,C,cp,"pointer to vector backing storage; slots +0/+4/+8 hold poor/middle/rich tax-object pointers; not inline slider values; see Economy/tax-and-tariff-receipts.md"
 CCountry,0x208,flag208,u32,?,re,AI branch of Event_Fire requires != 0
 CCountry,0x37C,aiGate0,u8,?,cp,AI_DailyUpdate requires 0 (human?)
 CCountry,0x37D,aiGate1,u8,?,cp,AI_DailyUpdate requires 0 (disabled?)
